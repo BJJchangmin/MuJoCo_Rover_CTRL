@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="rover_v2">
+  <link name="TRUNK">
+    <inertial>
+      <origin xyz="-0.228672754696564 0.146361147192139 1.69998799355159" rpy="0 0 0" />
+      <mass value="1386.15823721196" />
+      <inertia ixx="566.601341859803" ixy="0.118938042896247" ixz="-1.79261623941368E-05" iyy="818.606442582126" iyz="-0.000279812718553956" izz="397.700075716066" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/TRUNK.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/TRUNK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="FL_SUS_UNDER">
+    <inertial>
+      <origin xyz="0 0.209097697113477 -0.00697869044025465" rpy="0 0 0" />
+      <mass value="2.29748105535607" />
+      <inertia ixx="0.0490543441163693" ixy="1.48845034955192E-17" ixz="2.57601704439455E-18" iyy="0.00237085575179193" iyz="0.00151245644447147" izz="0.0476407721376424" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_SUS_UNDER.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_SUS_UNDER.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FL_SUS_UNDER_ACT" type="revolute">
+    <origin xyz="0.32097 -2.525 -0.13701" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="FL_SUS_UNDER" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FL_HUB">
+    <inertial>
+      <origin xyz="5.77315972805081E-15 0.0352311639184923 0.119627561273457" rpy="0 0 0" />
+      <mass value="1.14369575143116" />
+      <inertia ixx="0.0163132953382148" ixy="-8.10325487930409E-19" ixz="2.26248201446992E-18" iyy="0.0142566348234343" iyz="-0.000644981852168426" izz="0.00421216867799416" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_HUB.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_HUB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FL_HUB_ACT" type="revolute">
+    <origin xyz="0 0.44975 -0.015" rpy="0 0 0" />
+    <parent link="FL_SUS_UNDER" />
+    <child link="FL_HUB" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FL_STR">
+    <inertial>
+      <origin xyz="1.08750395355628E-07 -2.60328110179842E-08 -6.03060263601463E-08" rpy="0 0 0" />
+      <mass value="0.628728868190691" />
+      <inertia ixx="0.0042623857491552" ixy="-1.60838967379419E-09" ixz="6.32672564957036E-10" iyy="0.0042746653776951" iyz="-9.97436763648179E-10" izz="0.000289066634798196" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_STR.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_STR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FL_STR_ACT" type="revolute">
+    <origin xyz="0 0.09524 0.11" rpy="0 0 0" />
+    <parent link="FL_HUB" />
+    <child link="FL_STR" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FL_WHEEL">
+    <inertial>
+      <origin xyz="-1.19459997449667E-13 -0.00337696902262219 -2.13974671314787E-13" rpy="0 0 0" />
+      <mass value="47.7801832375326" />
+      <inertia ixx="1.86927604457164" ixy="1.9827458052493E-14" ixz="-1.9735438571082E-16" iyy="3.13539002961916" iyz="3.45278957561003E-14" izz="1.86927604457163" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_WHEEL.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_WHEEL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FL_WHEEL_ACT" type="revolute">
+    <origin xyz="0 0.35 0" rpy="0 0 0" />
+    <parent link="FL_STR" />
+    <child link="FL_WHEEL" />
+    <axis xyz="0 1 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FL_SUS_UP">
+    <inertial>
+      <origin xyz="-4.44089209850063E-16 0.209098023051833 -0.00696891772339633" rpy="0 0 0" />
+      <mass value="2.29748105535606" />
+      <inertia ixx="0.049054344116369" ixy="6.44882734860008E-19" ixz="4.73245990471263E-20" iyy="0.00237073091692606" iyz="0.00151058704380119" izz="0.047640896972508" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_SUS_UP.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FL_SUS_UP.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FL_SUS_UP_ACT" type="revolute">
+    <origin xyz="0.32097 -2.525 0.082989" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="FL_SUS_UP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FR_SUS_UNDER">
+    <inertial>
+      <origin xyz="0 -0.209097677338598 -0.00697928291615341" rpy="0 0 0" />
+      <mass value="2.29748105535606" />
+      <inertia ixx="0.049054344116369" ixy="-1.47182135383468E-19" ixz="-1.04311719783667E-19" iyy="0.0023708807908348" iyz="-0.00151283112447295" izz="0.0476407470985992" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_SUS_UNDER.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_SUS_UNDER.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FR_SUS_UNDER_ACT" type="revolute">
+    <origin xyz="-0.77903 -2.515 -0.13701" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="FR_SUS_UNDER" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FR_HUB">
+    <inertial>
+      <origin xyz="-4.44089209850063E-16 -0.0352311639186222 0.119627561273165" rpy="0 0 0" />
+      <mass value="1.14369575143116" />
+      <inertia ixx="0.0163132953382148" ixy="-5.31870668394989E-19" ixz="-1.70068234769286E-18" iyy="0.0142566348234342" iyz="0.000644981852168857" izz="0.00421216867799422" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_HUB.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_HUB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FR_HUB_ACT" type="revolute">
+    <origin xyz="0 -0.44975 -0.015022" rpy="0 0 0" />
+    <parent link="FR_SUS_UNDER" />
+    <child link="FR_HUB" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FR_STR">
+    <inertial>
+      <origin xyz="-1.08750395799717E-07 2.60328711920721E-08 -6.03057926859552E-08" rpy="0 0 0" />
+      <mass value="0.628728868190697" />
+      <inertia ixx="0.00426238574915521" ixy="-1.60838967355045E-09" ixz="-6.32672560487769E-10" iyy="0.00427466537769512" iyz="9.97436766021248E-10" izz="0.000289066634798199" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_STR.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/FR_STR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FR_STR_ACT" type="revolute">
+    <origin xyz="0 -0.09524 0.11" rpy="0 0 0" />
+    <parent link="FR_HUB" />
+    <child link="FR_STR" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FR_WHEEL">
+    <inertial>
+      <origin xyz="1.33670852164869E-13 0.00337696902262885 1.8757218001042E-13" rpy="0 0 0" />
+      <mass value="47.7801832375325" />
+      <inertia ixx="1.86927604457163" ixy="2.0307403152185E-14" ixz="-2.21533691856604E-15" iyy="3.13539002961915" iyz="3.06276445672508E-14" izz="1.86927604457163" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_WHEEL.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_WHEEL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FR_WHEEL_ACT" type="revolute">
+    <origin xyz="0 -0.35 0" rpy="0 0 0" />
+    <parent link="FR_STR" />
+    <child link="FR_WHEEL" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="FR_SUS_UP">
+    <inertial>
+      <origin xyz="-4.44089209850063E-16 -0.00698905561684059 0.2090973509158" rpy="0 0 0" />
+      <mass value="2.29748105535606" />
+      <inertia ixx="0.049054344116369" ixy="1.10467962801362E-19" ixz="-1.04139991408888E-19" iyy="0.0476406220783978" iyz="0.00151470051275764" izz="0.00237100581103623" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_SUS_UP.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/FR_SUS_UP.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="FR_SUS_UP_ACT" type="revolute">
+    <origin xyz="-0.77903 -2.515 0.082989" rpy="1.5708 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="FR_SUS_UP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RL_SUS_UNDER">
+    <inertial>
+      <origin xyz="2.22044604925031E-16 0.209097697113477 -0.00697869044025454" rpy="0 0 0" />
+      <mass value="2.29748105535607" />
+      <inertia ixx="0.0490543441163692" ixy="-2.33608745151104E-18" ixz="2.0386680768416E-19" iyy="0.00237085575179193" iyz="0.00151245644447147" izz="0.0476407721376423" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_SUS_UNDER.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_SUS_UNDER.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RL_SUS_UNDER_ACT" type="revolute">
+    <origin xyz="0.32097 -0.875 -0.13701" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="RL_SUS_UNDER" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RL_HUB">
+    <inertial>
+      <origin xyz="-2.22044604925031E-16 0.035231163918491 0.11962756127342" rpy="0 0 0" />
+      <mass value="1.14369575143116" />
+      <inertia ixx="0.0163132953382149" ixy="-1.20798307315838E-19" ixz="4.04288948807534E-19" iyy="0.0142566348234343" iyz="-0.000644981852168856" izz="0.00421216867799424" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_HUB.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_HUB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RL_HUB_ACT" type="revolute">
+    <origin xyz="0 0.44975 -0.015" rpy="0 0 0" />
+    <parent link="RL_SUS_UNDER" />
+    <child link="RL_HUB" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RL_STR">
+    <inertial>
+      <origin xyz="-1.08750395688695E-07 2.60328074652705E-08 -6.0305986808451E-08" rpy="0 0 0" />
+      <mass value="0.628728868190689" />
+      <inertia ixx="0.00426238574915518" ixy="-1.60838967353804E-09" ixz="-6.32672564343229E-10" iyy="0.00427466537769509" iyz="9.97436760881559E-10" izz="0.000289066634798195" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_STR.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_STR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RL_STR_ACT" type="revolute">
+    <origin xyz="0 0.09524 0.11" rpy="0 0 0" />
+    <parent link="RL_HUB" />
+    <child link="RL_STR" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RL_WHEEL">
+    <inertial>
+      <origin xyz="-1.38444811170757E-13 -0.00337696902262241 -2.02178551678145E-13" rpy="0 0 0" />
+      <mass value="47.7801832375326" />
+      <inertia ixx="1.86927604457163" ixy="2.17156003710413E-14" ixz="-2.20924369937882E-15" iyy="3.13539002961915" iyz="3.33837937801185E-14" izz="1.86927604457163" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_WHEEL.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_WHEEL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RL_WHEEL_ACT" type="revolute">
+    <origin xyz="0 0.35 0" rpy="0 0 0" />
+    <parent link="RL_STR" />
+    <child link="RL_WHEEL" />
+    <axis xyz="0 1 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RL_SUS_UP">
+    <inertial>
+      <origin xyz="6.66133814775094E-16 0.209098023051833 -0.00696891772339629" rpy="0 0 0" />
+      <mass value="2.29748105535608" />
+      <inertia ixx="0.0490543441163693" ixy="-2.18759480527568E-18" ixz="1.5436164469635E-19" iyy="0.00237073091692608" iyz="0.00151058704380119" izz="0.0476408969725082" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_SUS_UP.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RL_SUS_UP.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RL_SUS_UP_ACT" type="revolute">
+    <origin xyz="0.32097 -0.875 0.082989" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="RL_SUS_UP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RR_SUS_UNDER">
+    <inertial>
+      <origin xyz="1.11022302462516E-16 -0.209097677338599 -0.00697928291615352" rpy="0 0 0" />
+      <mass value="2.29748105535607" />
+      <inertia ixx="0.0490543441163692" ixy="-4.64721556784146E-19" ixz="-2.21637844463418E-19" iyy="0.00237088079083482" iyz="-0.00151283112447295" izz="0.0476407470985994" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_SUS_UNDER.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_SUS_UNDER.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RR_SUS_UNDER_ACT" type="revolute">
+    <origin xyz="-0.77903 -0.875 -0.13701" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="RR_SUS_UNDER" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RR_HUB">
+    <inertial>
+      <origin xyz="-5.55111512312578E-16 -0.0352311639184908 0.11962756127342" rpy="0 0 0" />
+      <mass value="1.14369575143116" />
+      <inertia ixx="0.0163132953382149" ixy="-4.9066400301049E-19" ixz="-7.01536478970035E-19" iyy="0.0142566348234343" iyz="0.000644981852168854" izz="0.00421216867799423" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_HUB.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_HUB.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RR_HUB_ACT" type="revolute">
+    <origin xyz="0 -0.44975 -0.015022" rpy="0 0 0" />
+    <parent link="RR_SUS_UNDER" />
+    <child link="RR_HUB" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RR_STR">
+    <inertial>
+      <origin xyz="1.08750395577673E-07 -2.60328083534489E-08 -6.03059867806954E-08" rpy="0 0 0" />
+      <mass value="0.62872886819069" />
+      <inertia ixx="0.00426238574915519" ixy="-1.60838967341054E-09" ixz="6.32672560966946E-10" iyy="0.00427466537769509" iyz="-9.97436763935047E-10" izz="0.000289066634798195" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_STR.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_STR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RR_STR_ACT" type="revolute">
+    <origin xyz="0 -0.09524 0.11" rpy="0 0 0" />
+    <parent link="RR_HUB" />
+    <child link="RR_STR" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RR_WHEEL">
+    <inertial>
+      <origin xyz="-2.35367281220533E-13 0.00337696902262241 -6.86395384974503E-14" rpy="0 0 0" />
+      <mass value="47.7801832375326" />
+      <inertia ixx="1.86927604457163" ixy="-3.75892046167777E-14" ixz="-2.29865241101877E-15" iyy="3.13539002961915" iyz="-1.08607703430937E-14" izz="1.86927604457164" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_WHEEL.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_WHEEL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RR_WHEEL_ACT" type="revolute">
+    <origin xyz="0 -0.35 0" rpy="0 0 0" />
+    <parent link="RR_STR" />
+    <child link="RR_WHEEL" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="RR_SUS_UP">
+    <inertial>
+      <origin xyz="1.11022302462516E-16 -0.2090973509158 -0.00698905561682528" rpy="0 0 0" />
+      <mass value="2.29748105535608" />
+      <inertia ixx="0.0490543441163693" ixy="-7.76280311818447E-20" ixz="-5.89912857242288E-20" iyy="0.0023710058110363" iyz="-0.00151470051275852" izz="0.047640622078398" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_SUS_UP.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="/home/ycm/mujoco/rover_v2_solidworks/meshes/RR_SUS_UP.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="RR_SUS_UP_ACT" type="revolute">
+    <origin xyz="-0.77903 -0.875 0.082989" rpy="0 0 -1.5708" />
+    <parent link="TRUNK" />
+    <child link="RR_SUS_UP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+</robot>

@@ -1,0 +1,34 @@
+<mujoco model="spaceroverMCL_scene">
+
+  <include file="spaceroverMCL.xml" />
+
+
+  <statistic center="0 0 0.1" extent="0.8" />
+
+  <asset>
+    <texture name="space_skybox" type="skybox" file="space3.png" />
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
+    <material name="MatBlack" rgba="1 0 0 1" />
+
+    <hfield name="perlin_hfield" size="25.0 25.0 0.2 0.2" file="height_field.png" />
+    <!-- <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" /> -->
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" directional="true" />
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+    <!-- 땅을 위로 올리기 -->
+    <!-- <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 0.1" quat="1.0 0.0 0.0 0.0" margin="0" gap="0" /> -->
+
+    <!-- 땅을 밑으로 숨기기 버전 -->
+    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 -0.2" quat="1.0 0.0 0.0 0.0" />
+
+    <!-- <geom name="inclined_ramp" type="box" size="1 1 0.02" pos="0 1.2 0.01" euler="0 0 0" material="MatBlack" /> -->
+
+    <!-- <geom name="speed_bump" type="capsule" size="0.01 1" fromto="0 -1.2 0.02 0 1.2 0.02" material="MatBlack" /> -->
+    <!-- <geom name="speed_bump" type="ellipsoid" size="0.5 1.2 0.05" pos="-0.30 0 0" material="MatBlack" /> -->
+
+
+  </worldbody>
+</mujoco>
