@@ -11,7 +11,7 @@
     <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
     <material name="MatBlack" rgba="1 0 0 1" />
 
-    <hfield name="perlin_hfield" size="25.0 25.0 0.2 0.2" file="height_field.png" />
+    <hfield name="perlin_hfield" size="25.0 25.0 0.1 0.2" file="height_field.png" />
     <!-- <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" /> -->
   </asset>
 

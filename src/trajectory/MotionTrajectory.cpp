@@ -182,8 +182,8 @@ void MotionTrajectory<T>::Slalom_traj(T time)
     chassis_traj_ptr_->chassis_angvel_des_[2] = current_Omega;
 
     chassis_traj_ptr_->chassis_pos_des_[2]    = 0; // IMU height [m]
-    chassis_traj_ptr_->chassis_angpos_des_[0] = 0.0; // Roll Angle
-    chassis_traj_ptr_->chassis_angpos_des_[1] = 0.0; // Pitch Angle
+    chassis_traj_ptr_->chassis_angpos_des_[0] = 0; // Roll Angle
+    chassis_traj_ptr_->chassis_angpos_des_[1] = 0; // Pitch Angle
 
 }
 

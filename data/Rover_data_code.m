@@ -119,9 +119,9 @@ for i = 1:1:4
     hold on;
     plot(t,drive_torque{i},'g-','LineWidth', lw);
     grid on;
-    legend('sus','steer','drive','FontName','Times New Roman','location','northeast','FontSize',fl,'Interpreter', 'latex')
     ylabel('$\tau$ (Nm)','FontName','Times New Roman','FontSize', Faxis,'Interpreter', 'latex'); % y축 레이블
 end
+legend('sus','steer','drive','FontName','Times New Roman','location','northeast','FontSize',fl,'Interpreter', 'latex')
 sgtitle('Motor Control Input ','FontName','Times New Roman','FontSize',sgT,'Interpreter', 'latex');
 
 figure(3)

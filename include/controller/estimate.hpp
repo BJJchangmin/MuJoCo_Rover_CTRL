@@ -32,7 +32,7 @@ class Estimate
     Estimate(RobotLeg<T> & robot);
     void slip_ratio_estimate();
     void cal_mu();
-    void est_GRF(const mjData * d);
+    void est_GRF(const mjModel* m, const mjData * d);
 };
 
 #endif  // ESTIMATE_HPP_

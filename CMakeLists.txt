@@ -35,6 +35,9 @@ endif()
 
 
 # sorce 파일들을 다른 패키지로 빼면 여기서 수정이 필요하다
+find_package(proxsuite 0.7.3 CONFIG REQUIRED
+  HINTS /home/ycm/YCM/third-party/proxsuite/install)
+
 file(GLOB_RECURSE SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
@@ -47,7 +50,7 @@ file(GLOB_RECURSE SOURCES
 )
 
 add_executable(simulation ${SOURCES})
-target_link_libraries(simulation mujoco::mujoco glfw pthread rt ${CMAKE_DL_LIBS})
+target_link_libraries(simulation mujoco::mujoco proxsuite::proxsuite glfw pthread rt ${CMAKE_DL_LIBS})
 set_target_properties(simulation PROPERTIES
   BUILD_RPATH ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 

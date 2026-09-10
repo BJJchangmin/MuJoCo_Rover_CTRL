@@ -38,6 +38,10 @@ public:
    **/
 
   //* Physical parameters *//
+  T Total_mass_;
+  T Trunk_mass_;
+  T Leg_mass_;
+  T gravity_;
 
   //* variables for control parameters *//
   // Mat2<T> jacbRW[4], jacbRW_inv[4];
@@ -49,6 +53,7 @@ public:
   //* variables for sensor data *//
   Vec3<T> body_pos_world_, body_vel_world_;
   Vec3<T> body_omega_world_;
+  Vec3<T> body_omega_chassis_ = Vec3<T>::Zero();
   Vec4<T> body_ang_quat_world_;
   Vec3<T> body_euler_world_;
 
@@ -68,7 +73,7 @@ public:
   static constexpr size_t k_num_dof_body = 6;  // num of body DoF
 
   //************************************* METHODS **************************************************
-  void get_sensor_data(mjData * data);
+  void get_sensor_data(const mjModel* model, mjData * data);
 
 };
 

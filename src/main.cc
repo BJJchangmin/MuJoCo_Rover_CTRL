@@ -69,7 +69,7 @@ const int kErrorLength = 1024;          // load error string length
 //* ******************************************************************************************** *//
 
 //! class 선언
-const double sim_end_time = 450.0;       // simulation end time (seconds)
+const double sim_end_time = 30.0;       // simulation end time (seconds)
 unsigned int loop_iter = 0;             // loop iteration counter
 RobotLeg<float> robot = buildMclQuad<float>();  // robot model
 MotorController<float> motor_ctrl(robot);     // tracking controller
@@ -414,7 +414,8 @@ void apply_joint_control(mjData * d)
   for (size_t i = 0; i < 4; i++)
   {
     //* Suspension 제어
-    active_sus[i] = -20*robot.joint_vel_act_[i][0] - 100*robot.joint_pos_act_[i][0];
+    active_sus[i] = -20*robot.joint_vel_act_[i][0];
+    // active_sus[i] = 0;
 
     d->ctrl[0 + 4*i] = robot.joint_torque_des_[i][0] + active_sus[i];
 
@@ -439,28 +440,30 @@ void YCM_controller()
   // bool bIsPerturbOn = false;
 
   //* trajectory generation
-  traj_generator.Slalom_traj(d->time-3);
-  // traj_generator.Orientation_traj(d->time, 0.1, 5, 0);
+  // traj_generator.Slalom_traj(d->time-5);
+  traj_generator.Orientation_traj(d->time-5, 0.1, 5, 0);
 
   //** High Level Controller */
-  high_level_ctrl.High_level_ctrl();
+
 
 
   // * Controller
   if(d->time <5)
   {
     motor_ctrl.suspension_motor_control();
+    motor_ctrl.steer_motor_control();
   }
   else
   {
-    motor_ctrl.suspension_motor_control();
+    high_level_ctrl.High_level_ctrl();
+    // motor_ctrl.suspension_motor_control();
     motor_ctrl.steer_motor_control();
     motor_ctrl.drive_motor_control();
   }
 
   // Motor_ID_Setting(d); // 사용할 때 이 함수 안에 꼭 읽어보기
   apply_joint_control(d);
-  estimator.est_GRF(d);
+  estimator.est_GRF(m, d);
 }
 
 void Mu_Lambda_setting()
@@ -632,14 +635,13 @@ void PhysicsLoop(mj::Simulate& sim) {
             //! Custom Controller
             //! 위에서 짜준 함수를 여기서 꼭 실행
             YCM_controller();
-            Mu_Lambda_setting();
 
             // run single step, let next iteration deal with timing
             mj_step(m, d);
             stepped = true;
             //* ******************************************************************************** *//
             //* ******** READ SENSOR DATA AND CONDUCT CALCULATOIN FOR STATE ESTIMATION ********* *//
-            robot.get_sensor_data(d);
+            robot.get_sensor_data(m,d);
 
             if (loop_iter % data_logger.get_logging_freq() == 0)
             {
@@ -672,7 +674,6 @@ void PhysicsLoop(mj::Simulate& sim) {
             //! Custom Controller
             //! 위에서 짜준 함수를 여기서 꼭 실행 (MuJoCo 내에 time이 깨질 수 있어서 꼭 위아래 똑같이 setting 필요)
             YCM_controller();
-            // Mu_Lambda_setting();
 
             // run single step, let next iteration deal with timing
             mj_step(m, d);
@@ -680,7 +681,7 @@ void PhysicsLoop(mj::Simulate& sim) {
             //* ******************************************************************************** *//
             // TODO: Make this sequence as a function
             //* ******** READ SENSOR DATA AND CONDUCT CALCULATOIN FOR STATE ESTIMATION ********* *//
-            robot.get_sensor_data(d);
+            robot.get_sensor_data(m, d);
 
             if (loop_iter % data_logger.get_logging_freq() == 0)
             {

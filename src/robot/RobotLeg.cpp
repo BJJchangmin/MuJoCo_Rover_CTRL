@@ -7,14 +7,30 @@ using namespace ori;
 using namespace std;
 
 template <typename T>
-void RobotLeg<T>::get_sensor_data(mjData * data)
+void RobotLeg<T>::get_sensor_data(const mjModel* model, mjData * data)
 {
+
+  //* Body Mass *//
+  Trunk_mass_ = model->body_mass[1];
+  Leg_mass_ = 15;
+  gravity_ = model->opt.gravity[2];
+
+  Total_mass_ = Trunk_mass_ + 4*Leg_mass_;
+
+
+
   //* get body position *//
   for (size_t i = 0; i< 3; i++)
   {
     body_pos_world_[i] = data->sensordata[i + 12];
     body_vel_world_[i] = data->sensordata[i + 6];
+
+    // frameangvel : world coordinate
     body_omega_world_[i] = data->sensordata[i + 9];
+
+    // gyro: 현재 IMU site 축 = chassis 축
+    body_omega_chassis_[i] = data->sensordata[i + 3];
+
   }
 
   for (size_t i = 0; i < 4; i++)
