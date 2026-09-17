@@ -99,7 +99,7 @@ void MotionTrajectory<T>::Slalom_traj(T time)
     switch(case_number) {
         // [Low Speed: 0.25 m/s]
         case 1: //! 37 seconds
-            target_vel = 0.3; target_freq = 0.1;
+            target_vel = 0.2; target_freq = 0.1;
             target_cycles = 3;  // 30초 소요
             break;
         case 2: //! 19 seconds
@@ -132,7 +132,7 @@ void MotionTrajectory<T>::Slalom_traj(T time)
     // ## 시간 및 궤적 자동 계산 ##
     // =============================================================================
 
-    T settle_time = 5.0;              // 초기 직진 안정화
+    T settle_time = 10.0;              // 초기 직진 안정화
     T steer_amp   = 10.0 * (M_PI / 180.0); // 조향 진폭 15도
 
     // 주파수에 맞춰 필요한 시간만큼만 수행
@@ -183,7 +183,19 @@ void MotionTrajectory<T>::Slalom_traj(T time)
 
     chassis_traj_ptr_->chassis_pos_des_[2]    = 0; // IMU height [m]
     chassis_traj_ptr_->chassis_angpos_des_[0] = 0; // Roll Angle
-    chassis_traj_ptr_->chassis_angpos_des_[1] = 0; // Pitch Angle
+
+    if (time < 1){
+      chassis_traj_ptr_->chassis_angpos_des_[1] = 0;
+    }
+    else {
+      chassis_traj_ptr_->chassis_angpos_des_[1] = Roll_Ref_.process(0*M_PI/180,0.1); // Pitch Angle
+    }
+
+
+
+    chassis_traj_ptr_->chassis_angvel_des_[0] = chassis_rollpos_dot_.process(chassis_traj_ptr_->chassis_angpos_des_[0],10);
+    chassis_traj_ptr_->chassis_angvel_des_[1] = chassis_pitchpos_dot_.process(chassis_traj_ptr_->chassis_angpos_des_[1],10);
+
 
 }
 
@@ -208,6 +220,9 @@ void MotionTrajectory<T>::Orientation_traj(T time, T f , T roll_amp, T pitch_amp
   {
     chassis_traj_ptr_->chassis_angpos_des_[0] = roll_amp*M_PI/180.0*sin(2*M_PI*f*(time-2)); // Roll Angle
     chassis_traj_ptr_->chassis_angpos_des_[1] = pitch_amp*M_PI/180.0*sin(2*M_PI*f*(time-2)); // Pitch Angle
+
+    chassis_traj_ptr_->chassis_angvel_des_[0] = chassis_rollpos_dot_.process(chassis_traj_ptr_->chassis_angpos_des_[0],10);
+    chassis_traj_ptr_->chassis_angvel_des_[1] = chassis_pitchpos_dot_.process(chassis_traj_ptr_->chassis_angpos_des_[1],10);
   }
 
 

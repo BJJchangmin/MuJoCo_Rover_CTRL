@@ -84,6 +84,7 @@ std::shared_ptr<MotionTrajectory<float>::DesiredFootTrajectory> foot_traj_ptr;
 std::shared_ptr<MotionTrajectory<float>::DesiredJointTrajectory> joint_traj_ptr;
 std::shared_ptr<MotionTrajectory<float>::DesiredChassisTrajectory> chassis_traj_ptr;
 std::shared_ptr<Estimate<float>::EstimateParam> estimate_param_ptr;
+std::shared_ptr<HighLevelController<float>::HighCtrl_Optimization>  higlctrl_opt_ptr;
 
 
 //* ******************************************************************************************** *//
@@ -435,17 +436,22 @@ void apply_joint_control(mjData * d)
 
 void YCM_controller()
 {
+  // get_sensor_data()에서 계산된 IMU 위치 속도. 순서: x, y, z [m/s].
+  // heading은 yaw만, chassis는 roll/pitch/yaw 모두 따라간다.
+  // 확인 후 false로 바꾸면 출력만 끈다. 제어기/CSV 입력은 바꾸지 않는다.
+
   //! Custom Controller
   //! 제어기 설계는 여기에서
   // bool bIsPerturbOn = false;
 
   //* trajectory generation
-  // traj_generator.Slalom_traj(d->time-5);
-  traj_generator.Orientation_traj(d->time-5, 0.1, 5, 0);
+  traj_generator.Slalom_traj(d->time-5);
+  // traj_generator.Orientation_traj(d->time-5, 0.1, 0, 5);
 
   //** High Level Controller */
-
-
+  // Update contact normals from the current mjData before the QP reads them.
+  // Robot feedback is refreshed from the same simulation step in PhysicsLoop.
+  estimator.est_GRF(m, d);
 
   // * Controller
   if(d->time <5)
@@ -455,15 +461,14 @@ void YCM_controller()
   }
   else
   {
-    high_level_ctrl.High_level_ctrl();
+    high_level_ctrl.High_level_ctrl(d->time);
     // motor_ctrl.suspension_motor_control();
     motor_ctrl.steer_motor_control();
-    motor_ctrl.drive_motor_control();
+    // motor_ctrl.drive_motor_control();
   }
 
   // Motor_ID_Setting(d); // 사용할 때 이 함수 안에 꼭 읽어보기
   apply_joint_control(d);
-  estimator.est_GRF(m, d);
 }
 
 void Mu_Lambda_setting()
@@ -814,6 +819,7 @@ int main(int argc, char** argv) {
   joint_traj_ptr = traj_generator.set_joint_traj_ptr();
   chassis_traj_ptr = traj_generator.set_chassis_traj_ptr();
   estimate_param_ptr = estimator.set_estimate_param_ptr();
+  higlctrl_opt_ptr = high_level_ctrl.set_higlctrl_opt_ptr();
 
 
   //* ****************************************************************************************** *//
@@ -825,7 +831,9 @@ int main(int argc, char** argv) {
   motor_ctrl.get_traj_pointer(foot_traj_ptr, joint_traj_ptr);
   data_logger.get_traj_ptr(foot_traj_ptr, joint_traj_ptr, chassis_traj_ptr);
   data_logger.get_estimate_ptr(estimate_param_ptr);
+  data_logger.get_highctrl_opt_ptr(higlctrl_opt_ptr);
   high_level_ctrl.get_traj_pointer(chassis_traj_ptr, joint_traj_ptr);
+  high_level_ctrl.get_estimate_ptr(estimate_param_ptr);
 
   // start physics thread
   std::thread physicsthreadhandle(&PhysicsThread, sim.get(), filename);

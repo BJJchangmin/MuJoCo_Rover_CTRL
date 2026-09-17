@@ -20,8 +20,9 @@ void Estimate<T>::slip_ratio_estimate()
   T Rover_vel_x;
   double wv[4];
 
-  // Rover_vel_x = Max(robot_.body_vel_world_[0],0.001); // 초기 속도가 없을 때 0으로 나누는 것을 방지하기 위함
-  Rover_vel_x = robot_.body_vel_world_[0];
+  // Rover_vel_x = Max(robot_.body_vel_chassis_[0],0.001); // 초기 속도가 없을 때 0으로 나누는 것을 방지하기 위함
+  // 차체 종방향 속도. 바퀴 원주속도(r*w)와 같은 프레임이어야 슬립률이 맞는다.
+  Rover_vel_x = robot_.body_vel_chassis_[0];
   for(size_t i = 0; i < 4; i++)
   {
     wv[i] = robot_.joint_vel_act_[i][3];
@@ -99,6 +100,18 @@ void Estimate<T>::est_GRF(const mjModel* m, const mjData * d)
     estimate_param_ptr_->grf_y_[i] = T(0);
     estimate_param_ptr_->grf_z_[i] = T(0);
 
+    // 이번 제어 주기의 접촉 정보를 새로 구한다
+    estimate_param_ptr_->contact_normal_valid_[i] = false;
+
+    for (int j = 0; j < 3; ++j) {
+      estimate_param_ptr_->contact_normal_world_[i][j] = T(0);
+      estimate_param_ptr_->contact_pos_world_[i][j] = T(0);
+    }
+
+    // 한 바퀴에 여러 접촉점이 있으면
+    // 법선력이 가장 큰 접촉점을 대표로 선택
+    mjtNum largest_normal_force = 0;
+
     const int wheel_body_id =
         mj_name2id(m, mjOBJ_BODY, wheel_body_names[i]);
     if (wheel_body_id < 0) {
@@ -108,6 +121,7 @@ void Estimate<T>::est_GRF(const mjModel* m, const mjData * d)
 
     int contact_count = 0;
     mjtNum force_world_sum[3] = {};
+    mjtNum normal_force_sum = 0;
 
     for (int c = 0; c < d->ncon; ++c) {
       const mjContact& contact = d->contact[c];
@@ -132,6 +146,32 @@ void Estimate<T>::est_GRF(const mjModel* m, const mjData * d)
       mjtNum contact_wrench[6] = {};
       mj_contactForce(m, d, c, contact_wrench);
 
+      // 접촉점의 법선력 [N] //! 나중에 사용할 때 단위벡터로 써야함
+      // MuJoCo 접촉 좌표계에서는 첫 번째 힘 성분이 법선력이다.
+      const mjtNum fn = contact_wrench[0];
+
+      // 거의 힘이 없는 접촉은 대표 지지 접촉으로 선택하지 않는다
+      const mjtNum normal_force_threshold = 1e-6; //[N]
+
+      if (fn > normal_force_threshold && fn > largest_normal_force){
+
+        largest_normal_force = fn;
+
+        for (int j = 0; j < 3; ++j) {
+
+          // world 기준 법선. 지면 -> 바퀴 방향으로 통일
+          estimate_param_ptr_->contact_normal_world_[i][j] = T(sign * contact.frame[j]);
+
+          // 동일한 접촉점의 world 위치 [m]
+          estimate_param_ptr_->contact_pos_world_[i][j] = T(contact.pos[j]);
+
+        }
+
+        estimate_param_ptr_->contact_normal_valid_[i] = true;
+
+      }
+
+
       // 접촉 좌표계 -> World, 앞의 힘 성분 3개만 사용한다.
       mjtNum force_world[3] = {};
       mju_mulMatTVec(force_world, contact.frame, contact_wrench, 3, 3);
@@ -144,6 +184,8 @@ void Estimate<T>::est_GRF(const mjModel* m, const mjData * d)
           sign * contact.frame[0] * force_world[0] +
           sign * contact.frame[1] * force_world[1] +
           sign * contact.frame[2] * force_world[2];
+
+      normal_force_sum += normal_force;
     }
 
     Vec3<T> force_chassis = Vec3<T>::Zero();
@@ -159,7 +201,7 @@ void Estimate<T>::est_GRF(const mjModel* m, const mjData * d)
     // 접촉이 없으면 0. abs()와 바퀴 구름각 보정은 적용하지 않는다.
     estimate_param_ptr_->grf_x_[i] = force_chassis[0];
     estimate_param_ptr_->grf_y_[i] = force_chassis[1];
-    estimate_param_ptr_->grf_z_[i] = force_chassis[2];
+    estimate_param_ptr_->grf_z_[i] = T(normal_force_sum);
   }
 }
 

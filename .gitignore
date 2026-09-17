@@ -39,3 +39,9 @@ __pycache__/
 *.swo
 *~
 .DS_Store
+
+# Exported figure images from MATLAB plotting scripts
+/data/figure_png/
+
+# Local design/planning notes and generated figures
+/docs/

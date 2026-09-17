@@ -75,7 +75,12 @@ void DataLogging<T>::save_data(const mjModel* m, mjData* d)
       fout_[i] << estimate_param_ptr_->mu_[i] << ",";  // friction coefficient
 
       fout_[i] << estimate_param_ptr_->grf_x_[i] << ","; // grf x
-      fout_[i] << estimate_param_ptr_->grf_z_[i] ; // grf y
+      fout_[i] << estimate_param_ptr_->grf_z_[i] << ","; // grf y
+      fout_[i] << higlctrl_opt_ptr_->Opt_Wheel_Fx_[i] << ","; // Wheel_Fz Optimization Result
+      fout_[i] << higlctrl_opt_ptr_->Opt_Wheel_Fy_[i] << ","; // Wheel_Fz Optimization Result
+      fout_[i] << higlctrl_opt_ptr_->Opt_Wheel_Fz_[i] << ","; // Wheel_Fz Optimization Result
+
+      fout_[i] << robot_.foot_contact_[i] ;
 
 
 
@@ -92,12 +97,12 @@ void DataLogging<T>::save_data(const mjModel* m, mjData* d)
   }
   else
   {
-    fout_[4] << d->sensordata[6] << ","; // trunk x velocity
-    fout_[4] << d->sensordata[7] << ","; // trunk y velocity
-    fout_[4] << d->sensordata[8] << ","; // trunk z velocity
-    fout_[4] << d->sensordata[9] << ","; // trunk x_ang_vel
-    fout_[4] << d->sensordata[10] << ","; // trunk y_ang_vel
-    fout_[4] << d->sensordata[11] << ","; // trunk z_ang_vel
+    fout_[4] << robot_.body_vel_chassis_[0] << ","; // trunk x velocity (chassis frame)
+    fout_[4] << robot_.body_vel_chassis_[1] << ","; // trunk y velocity (chassis frame)
+    fout_[4] << robot_.body_vel_chassis_[2] << ","; // trunk z velocity (chassis frame)
+    fout_[4] << robot_.body_omega_chassis_[0] << ","; // trunk x_ang_vel (gyro, chassis frame)
+    fout_[4] << robot_.body_omega_chassis_[1] << ","; // trunk y_ang_vel (gyro, chassis frame)
+    fout_[4] << robot_.body_omega_chassis_[2] << ","; // trunk z_ang_vel (gyro, chassis frame)
     fout_[4] << d->sensordata[12] << ","; // trunk_x_pos
     fout_[4] << d->sensordata[13] << ","; // trunk_y_pos
     fout_[4] << d->sensordata[14] << ","; // trunk_z_pos
@@ -136,8 +141,9 @@ void DataLogging<T>::init_data()
       fout_[i] << "Time, " ;
       fout_[i] << "sus_pos_ref, sus_pos, sus_vel, sus_torque, ";
       fout_[i] << "steer_pos_ref, steer_pos, steer_vel, steer_torque, ";
-      fout_[i] << "drive_vel_ref, drive_pos, drive_vel, drive_torque ";
-      fout_[i] << "slip_ratio, Mu, grf_x, grf_z " << std::endl;
+      fout_[i] << "drive_vel_ref, drive_pos, drive_vel, drive_torque, ";
+      fout_[i] << "slip_ratio, Mu, grf_x, grf_z , Opt_wheel_grf_x,Opt_wheel_grf_y, Opt_wheel_grf_z, ";
+      fout_[i] << "foot_contact" << std::endl;
     }
   }
 
@@ -150,8 +156,8 @@ void DataLogging<T>::init_data()
   else
   {
     fout_[4] << "trunk_x_vel, trunk_y_vel, trunk_z_vel, ";
-    fout_[4] << "trunk_x_ang_vel, trunk_y_ang_vel, trunk_z_ang_vel";
-    fout_[4] << "trunk_x_pos, trunk_y_pos, trunk_z_pos, trunk_x_acc, trunk_y_acc, trunk_z_acc";
+    fout_[4] << "trunk_x_ang_vel, trunk_y_ang_vel, trunk_z_ang_vel, ";
+    fout_[4] << "trunk_x_pos, trunk_y_pos, trunk_z_pos, trunk_x_acc, trunk_y_acc, trunk_z_acc, ";
     fout_[4] << "trunk_roll_angle, trunk_pitch_angle, trunk_yaw_angle, ";
     fout_[4] << "trunk_x_vel_ref, trunk_y_vel_ref, trunk_yaw_rate_ref, trunk_roll_angle_ref, trunk_pitch_angle_ref" << std::endl;
 
@@ -177,6 +183,13 @@ void DataLogging<T>::get_estimate_ptr(
     std::shared_ptr<typename Estimate<T>::EstimateParam> estimate_param_ptr)
 {
   estimate_param_ptr_ = estimate_param_ptr;
+}
+
+template <typename T>
+void DataLogging<T>::get_highctrl_opt_ptr(
+    std::shared_ptr<typename HighLevelController<T>::HighCtrl_Optimization> higlctrl_opt_ptr)
+{
+  higlctrl_opt_ptr_ = higlctrl_opt_ptr;
 }
 
 
