@@ -16,13 +16,13 @@ using namespace Eigen;
 
 #endif
 
-#ifndef Ts
-#define Ts 0.001 // Default sampling time
-#endif
+// #ifndef Ts
+// #define Ts 0.001 // Default sampling time
+// #endif
 
 namespace ControlUtils {
 
-
+constexpr double Ts = 0.001; //[s]
 
 template <typename T>
 inline T saturation_block(T up_limit, T low_limit, T input)
@@ -230,6 +230,9 @@ public:
 
   T control( T J, T B, T Vel_command, T ff_cutoff_freq) {
 
+    J_ = J;
+    B_ = B;
+
     T vel_cmd_dot = vel_dot_.process(Vel_command,30);
 
     T tau_ff = J_ * vel_cmd_dot + B_*Vel_command;
@@ -413,6 +416,58 @@ public:
     T PD_output = kp_ * error + kd_ * error_dot_;
 
     return PD_output;
+  }
+
+};
+
+template <typename T>
+class PIDcontroller {
+
+private:
+
+  T kp_;
+  T ki_;
+  T kd_;
+  T i_error_;
+
+  Integrator<T> integrator_;
+  tustin_derivate<T> error_dot;
+
+  T current_error_;
+
+public:
+
+  PIDcontroller() : integrator_(), error_dot() {
+    kp_ = T(0);
+    ki_ = T(0);
+    kd_ = T(0);
+    current_error_ = T(0);
+    i_error_ = T(0);
+  }
+
+  T control(T kp, T ki, T kd, T ref, T act, T Anti_windup_error, T err_cut_off)
+  {
+    kp_ = kp;
+    ki_ = ki;
+    kd_ = kd;
+
+    current_error_ = ref - act;
+
+    T p_term = kp_ * current_error_;
+
+    i_error_ = current_error_ - Anti_windup_error;
+
+    T new_i_error = integrator_.process(i_error_);
+
+    T i_term = ki_ * new_i_error;
+
+    T error_dot_ = error_dot.process(current_error_, err_cut_off);
+
+    T d_term = kd_ * error_dot_;
+
+    T PID_output = p_term + i_term + d_term;
+
+    return PID_output;
   }
 
 };

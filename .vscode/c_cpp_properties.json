@@ -8,6 +8,7 @@
       "includePath": [
         "/opt/ros/foxy/include/**",
         "${workspaceFolder}/include/**",
+        "/home/ycm/YCM/third-party/proxsuite/install/include",
         "/usr/include/**"
       ],
       "name": "space_rover_optimization",

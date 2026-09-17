@@ -13,6 +13,7 @@
 
 #include <mujoco/mujoco.h>
 
+#include "HighLevelController.hpp"
 #include "MotionTrajectory.hpp"
 #include "estimate.hpp"
 
@@ -30,6 +31,7 @@ class DataLogging
     std::shared_ptr<typename MotionTrajectory<T>::DesiredJointTrajectory> joint_traj_ptr_;
     std::shared_ptr<typename MotionTrajectory<T>::DesiredChassisTrajectory> chassis_traj_ptr_;
     std::shared_ptr<typename Estimate<T>::EstimateParam> estimate_param_ptr_;
+    std::shared_ptr<typename HighLevelController<T>::HighCtrl_Optimization> higlctrl_opt_ptr_;
 
 
   public:
@@ -44,6 +46,8 @@ class DataLogging
     std::shared_ptr<typename MotionTrajectory<T>::DesiredChassisTrajectory> chassis_traj_ptr);
 
     void get_estimate_ptr( std::shared_ptr<typename Estimate<T>::EstimateParam> estimate_param_ptr);
+
+    void get_highctrl_opt_ptr( std::shared_ptr<typename HighLevelController<T>::HighCtrl_Optimization> higlctrl_opt_ptr );
 
     int get_logging_freq();
 

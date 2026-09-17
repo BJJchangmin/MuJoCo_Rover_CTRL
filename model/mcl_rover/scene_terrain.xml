@@ -19,12 +19,19 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true" />
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
     <!-- 땅을 위로 올리기 -->
-    <!-- <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 0.1" quat="1.0 0.0 0.0 0.0" margin="0" gap="0" /> -->
+    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 0.5" quat="1.0 0.0 0.0 0.0" margin="0" gap="0" />
 
     <!-- 땅을 밑으로 숨기기 버전 -->
-    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 -0.2" quat="1.0 0.0 0.0 0.0" />
+    <!-- <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 -0.2" quat="1.0 0.0 0.0 0.0" /> -->
 
     <!-- <geom name="inclined_ramp" type="box" size="1 1 0.02" pos="0 1.2 0.01" euler="0 0 0" material="MatBlack" /> -->
+
+    <!-- 10 deg uphill along World +X (compiler angle="radian").
+         Surface length 8 m, width 6 m, thickness 0.2 m; size is half-size.
+         Low top edge: (x,z)=(1.5,0), flush with floor (no entry step).
+         High top edge: (x,z)=(9.378462024,1.389185421).
+         Top-face World normal: [-0.173648178, 0, 0.984807753]. -->
+    <!-- <geom name="slope_10deg" type="box" size="4 3 0.1" pos="5.456595829816 0 0.596111935367" euler="0 -0.174532925199433 0" material="groundplane" rgba="0.65 0.75 0.85 1" /> -->
 
     <!-- <geom name="speed_bump" type="capsule" size="0.01 1" fromto="0 -1.2 0.02 0 1.2 0.02" material="MatBlack" /> -->
     <!-- <geom name="speed_bump" type="ellipsoid" size="0.5 1.2 0.05" pos="-0.30 0 0" material="MatBlack" /> -->

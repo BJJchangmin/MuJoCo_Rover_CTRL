@@ -6,6 +6,7 @@
 
 #include "MuJoCoInterface.hpp"
 #include "RobotLeg.hpp"
+#include "ControlUtils.hpp"
 
 template <typename T>
 class MotionTrajectory
@@ -37,6 +38,10 @@ class MotionTrajectory
         Vec3<T> chassis_angvel_des_; // [Roll Rate, Pitch Rate, Yaw Rate]
         Vec3<T> chassis_angpos_des_; // [Roll Angle, Pitch Angle, Yaw Angle]
     };
+
+    ControlUtils::tustin_derivate<T> chassis_rollpos_dot_;
+    ControlUtils::tustin_derivate<T> chassis_pitchpos_dot_;
+    ControlUtils::LPF<T> Roll_Ref_;
 
     struct DesiredJointTrajectory
     {

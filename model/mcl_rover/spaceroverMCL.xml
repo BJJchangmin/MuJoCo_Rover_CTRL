@@ -319,9 +319,9 @@
 
   <keyframe>
     <!-- <key name="home" qpos="-4. 5. 0.245 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/> -->
-    <key name="home" qpos="0 0 0.17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+    <key name="home" qpos="0 0 0.8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
   </keyframe>
-  <!-- 0.17은 normal floor일 때 /  -->
+  <!-- 0.17은 normal floor일 때 , 0.8이 들어올렸을때/  -->
 
 
 </mujoco>

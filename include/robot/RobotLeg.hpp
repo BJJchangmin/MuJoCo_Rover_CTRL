@@ -52,6 +52,9 @@ public:
 
   //* variables for sensor data *//
   Vec3<T> body_pos_world_, body_vel_world_;
+  // IMU 위치의 월드에 대한 속도 [m/s]. 원점 이동 없이 표현 축만 변환한다.
+  Vec3<T> body_vel_heading_ = Vec3<T>::Zero(); // yaw만 따라가는 수평 축
+  Vec3<T> body_vel_chassis_ = Vec3<T>::Zero(); // roll, pitch, yaw를 모두 따라가는 차체 축
   Vec3<T> body_omega_world_;
   Vec3<T> body_omega_chassis_ = Vec3<T>::Zero();
   Vec4<T> body_ang_quat_world_;
