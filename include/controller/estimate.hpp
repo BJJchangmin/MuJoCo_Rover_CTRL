@@ -23,6 +23,16 @@ class Estimate
       T grf_x_[4]; // [FL FR RL RR]
       T grf_y_[4]; // [FL FR RL RR]
       T grf_z_[4]; // [FL FR RL RR]
+
+      // world 기준 접촉 법선 단위벡터: [nx, ny, nz]
+      // 방향: 지면 -> 바퀴
+      T contact_normal_world_[4][3] = {}; // 법선 벡터의 world 기준 나중에 chassis frame으로 돌려야 할듯
+
+      T contact_pos_world_[4][3] = {}; //! 이거는 body frame에서 찾는게 더 적합하지 않나? 생각
+
+      // 이번 주기에 유효한 대표 접촉을 찾았는가?
+      bool contact_normal_valid_[4] = {};
+
     };
 
     std::shared_ptr<EstimateParam> estimate_param_ptr_;
