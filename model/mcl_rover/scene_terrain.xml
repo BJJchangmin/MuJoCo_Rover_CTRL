@@ -3,7 +3,7 @@
   <include file="spaceroverMCL.xml" />
 
 
-  <statistic center="0 0 0.1" extent="0.8" />
+  <statistic center="0 0 0.5" extent="3" />
 
   <asset>
     <texture name="space_skybox" type="skybox" file="space3.png" />
@@ -11,7 +11,7 @@
     <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
     <material name="MatBlack" rgba="1 0 0 1" />
 
-    <hfield name="perlin_hfield" size="25.0 25.0 0.1 0.2" file="height_field.png" />
+    <hfield name="perlin_hfield" size="25.0 25.0 0.2 0.2" file="height_field.png" />
     <!-- <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" /> -->
   </asset>
 
@@ -19,10 +19,31 @@
     <light pos="0 0 1.5" dir="0 0 -1" directional="true" />
     <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
     <!-- 땅을 위로 올리기 -->
-    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 0.5" quat="1.0 0.0 0.0 0.0" margin="0" gap="0" />
+    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 0.1" quat="1.0 0.0 0.0 0.0" margin="0" gap="0" />
 
     <!-- 땅을 밑으로 숨기기 버전 -->
-    <!-- <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 -0.2" quat="1.0 0.0 0.0 0.0" /> -->
+        <!-- 차체를 지지하는 고정 받침대 -->
+    <!-- <geom name="chassis_support"
+          type="box"
+          pos="0 0 0"
+          size="0.5 0.15 0.5"
+          rgba="0.4 0.4 0.45 1"
+          contype="1"
+          conaffinity="1"
+          condim="3"
+          friction="1 0.005 0.0001"/> -->
+      <!-- FL 앞 5도 경사로: +X 방향으로 올라감-->
+      <!-- <geom name="ramp_FL"
+            type="box"
+            size="1.5 0.2 0.05"
+            pos="2.0 0.563 0.037346" 
+            euler="0 -0.08726646 0" 
+            rgba="0.8 0.5 0.2 1"
+            contype="1"
+            conaffinity="1"
+            condim="3"
+            friction="0.8 0.005 0.0001"/>
+    <geom type="hfield" hfield="perlin_hfield" pos="0.04735 -1.09 -0.2" quat="1.0 0.0 0.0 0.0" /> --> 
 
     <!-- <geom name="inclined_ramp" type="box" size="1 1 0.02" pos="0 1.2 0.01" euler="0 0 0" material="MatBlack" /> -->
 
@@ -35,7 +56,8 @@
 
     <!-- <geom name="speed_bump" type="capsule" size="0.01 1" fromto="0 -1.2 0.02 0 1.2 0.02" material="MatBlack" /> -->
     <!-- <geom name="speed_bump" type="ellipsoid" size="0.5 1.2 0.05" pos="-0.30 0 0" material="MatBlack" /> -->
-
+    <!-- pos="0.0 0.563 0.037346" -->
+    <!-- euler="0 -0.08726646 0"  -->
 
   </worldbody>
 </mujoco>
